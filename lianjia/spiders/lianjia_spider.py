@@ -2,6 +2,7 @@
 
 import scrapy
 import json
+from datetime import date
 
 class LianjiaSpider(scrapy.Spider):
     name = "lianjia"
@@ -27,6 +28,10 @@ class LianjiaSpider(scrapy.Spider):
         'http://tj.fang.lianjia.com/loupan/jinghai/',
         'http://tj.fang.lianjia.com/loupan/jixian/',
     ]
+
+    # def start_requests(self):
+    #     url = 'http://tj.fang.lianjia.com/loupan/'
+    #     for
         
             
     def parse(self, response):
@@ -39,7 +44,7 @@ class LianjiaSpider(scrapy.Spider):
         next_url = response.css('div.fl.l-txt a::attr(href)').extract()[3]
 
         for h in response.css('div.list-wrap div.info-panel'):
-            with open('test.json', 'a', encoding='utf-8') as fp:
+            with open(date.today().strftime('%Y_%m_%d')+'.json', 'a', encoding='utf-8') as fp:
                 json.dump({
                     '0qu' : response.css('div.fl.l-txt a::text').extract()[3],
                     '1hname' : h.css('div.col-1 a::text').extract_first(),
